@@ -1,0 +1,118 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "customer_email": {
+      "type": "string",
+      "description": "Customer email"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Customer full name"
+    },
+    "items": {
+      "type": "array",
+      "description": "Order line items",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "product_title": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "dosage": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "Total in ZAR"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_payment",
+        "payment_submitted",
+        "processing",
+        "ready",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending_payment"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "card_gateway",
+        "bank_voucher"
+      ]
+    },
+    "voucher_code": {
+      "type": "string",
+      "description": "Bank voucher code"
+    },
+    "voucher_pin": {
+      "type": "string",
+      "description": "Bank voucher PIN"
+    },
+    "voucher_type": {
+      "type": "string",
+      "description": "e.g. FNB eWallet, ABSA CashSend"
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": [
+        "collection",
+        "delivery"
+      ],
+      "default": "collection"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_email",
+    "items",
+    "total_amount",
+    "payment_method"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "_id": "never_delete_this_record"
+    }
+  }
+}

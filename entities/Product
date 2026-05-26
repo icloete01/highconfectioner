@@ -1,0 +1,106 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed product description"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Brief tagline"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price in ZAR"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "gummies",
+        "baked_goods",
+        "chocolates",
+        "beverages"
+      ],
+      "description": "Product category"
+    },
+    "dosage": {
+      "type": "string",
+      "description": "Dosage info e.g. 10mg THC"
+    },
+    "strain_type": {
+      "type": "string",
+      "enum": [
+        "indica",
+        "sativa",
+        "hybrid",
+        "cbd_only"
+      ],
+      "description": "Cannabis strain type"
+    },
+    "ingredients": {
+      "type": "string",
+      "description": "Full ingredients list"
+    },
+    "dosing_guidelines": {
+      "type": "string",
+      "description": "Safety and dosing guidelines"
+    },
+    "stock_level": {
+      "type": "number",
+      "description": "Available stock quantity"
+    },
+    "is_visible": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether product is visible in shop"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured product flag"
+    }
+  },
+  "required": [
+    "title",
+    "price",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.is_visible": true
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "CartItem",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Reference to product"
+    },
+    "product_title": {
+      "type": "string"
+    },
+    "product_image": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "dosage": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "product_id",
+    "product_title",
+    "price",
+    "quantity"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

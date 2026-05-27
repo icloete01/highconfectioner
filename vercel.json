@@ -4,5 +4,8 @@
   "framework": "vite",
   "env": {
     "BASE44_LEGACY_SDK_IMPORTS": "@base44_legacy_sdk_imports"
-  }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
 }
